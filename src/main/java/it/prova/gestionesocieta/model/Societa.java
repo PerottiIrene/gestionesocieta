@@ -30,7 +30,6 @@ public class Societa {
 	private String indirizzo;
 	@Column(name = "dataFondazione")
 	private Date dataFondazione;
-	@ManyToOne(fetch = FetchType.LAZY)
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "societa")
 	private Set<Dipendente> dipendenti = new HashSet<>();
 	
@@ -43,6 +42,18 @@ public class Societa {
 		this.indirizzo = indirizzo;
 		this.dataFondazione = dataFondazione;
 		this.dipendenti = dipendenti;
+	}
+
+	public Societa(String ragioneSociale, String indirizzo, Date dataFondazione) {
+		super();
+		this.ragioneSociale = ragioneSociale;
+		this.indirizzo = indirizzo;
+		this.dataFondazione = dataFondazione;
+	}
+
+	public Societa(String ragioneSociale) {
+		super();
+		this.ragioneSociale = ragioneSociale;
 	}
 
 	public Long getId() {
