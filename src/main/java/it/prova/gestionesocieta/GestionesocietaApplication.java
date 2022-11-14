@@ -28,6 +28,7 @@ public class GestionesocietaApplication implements CommandLineRunner{
 //		batteriaDiTestService.testRimozioneSocieta();
 		batteriaDiTestService.testInserimentoDipendente();
 		batteriaDiTestService.testModificaDipendente();
+		batteriaDiTestService.testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi();
 		
 	}
 	

@@ -108,6 +108,25 @@ public class BatteriaDiTestService {
 		
 	}
 	
+	public void testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi() {
+		
+		Societa societa1=new Societa("nuovaSocieta","via roma",new Date());
+		societaService.inserisciNuovo(societa1);
+		Dipendente nuovoDipendente=new Dipendente("mario", "rossi", new Date(),400000,societa1);
+		dipendenteService.inserisciNuovo(nuovoDipendente);
+		
+		Societa societa2=new Societa("nuovaSocieta","via roma",new Date());
+		societaService.inserisciNuovo(societa2);
+		Dipendente nuovoDipendente2=new Dipendente("mario", "rossi", new Date(),500000,societa2);
+		dipendenteService.inserisciNuovo(nuovoDipendente2);
+		
+		List<Societa> societaConAlmenoUnDipendenteConRalMaggioreDi=societaService.tutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi(30000);
+		if(societaConAlmenoUnDipendenteConRalMaggioreDi.size() != 2)
+			throw new RuntimeException("testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi failed");
+		
+		System.out.println("testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi...OK");
+	}
+	
 	
 
 }

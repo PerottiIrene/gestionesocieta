@@ -67,5 +67,10 @@ public class SocietaServiceImpl implements SocietaService{
 
 		return entityManager.createQuery(query, Societa.class).getResultList();
 	}
+
+	@Override
+	public List<Societa> tutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi(Integer ral) {
+		return (List<Societa>) societaRepository.findAllDistinctByDipendenti_RedditoAnnuoLordoGreaterThan(ral);
+	}
 }
 

@@ -8,6 +8,6 @@ import it.prova.gestionesocieta.model.Dipendente;
 
 public interface DipendenteRepository extends CrudRepository<Dipendente, Long>, QueryByExampleExecutor<Dipendente>{
 	
-
+//	Dipendente findByDataAssunzione
 
 }

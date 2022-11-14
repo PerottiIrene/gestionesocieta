@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.QueryByExampleExecutor;
 import it.prova.gestionesocieta.model.Societa;
 
 public interface SocietaRepository extends CrudRepository<Societa, Long>, QueryByExampleExecutor<Societa>{
+	
+	List<Societa> findAllDistinctByDipendenti_RedditoAnnuoLordoGreaterThan(Integer ral);
 
 	
 }
