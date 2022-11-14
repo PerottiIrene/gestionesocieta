@@ -2,8 +2,10 @@ package it.prova.gestionesocieta.service;
 
 import java.util.List;
 
+import javax.management.Query;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +50,10 @@ public class SocietaServiceImpl implements SocietaService{
 	}
 
 	@Transactional
-	public void rimuovi(Societa societaInstance) {
+	public void rimuovi(Long id) {
+		Societa societaInstance=societaRepository.findById(id).orElse(null);
 		if(societaInstance.getDipendenti().size() != 0)
-			throw new SocietaConDipendentiAssociatiException();
+			throw new SocietaConDipendentiAssociatiException("societa collegata a dipendenti, impossibile rimuoverla");
 		societaRepository.delete(societaInstance);
 	}
 

@@ -1,5 +1,7 @@
 package it.prova.gestionesocieta.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -55,18 +57,19 @@ public class BatteriaDiTestService {
 		
 		Societa societaDaRimuovere=new Societa("nuovaSocieta","via roma",new Date());
 		societaService.inserisciNuovo(societaDaRimuovere);
-		if (societaDaRimuovere.getId() != null)
+		if (societaDaRimuovere.getId() == null)
 			throw new RuntimeException("testInserisciNuovaSocieta...failed: transient object con id valorizzato");
+		Dipendente nuovoDipedente=new Dipendente("irene","rossi",new Date(),13000,societaDaRimuovere);
+		dipendenteService.inserisciNuovo(nuovoDipedente);
 		
 		try {
-		societaService.rimuovi(societaDaRimuovere);	
-		}catch (SocietaConDipendentiAssociatiException e) {
-			e.printStackTrace();
-		}
-		
+		societaService.rimuovi(societaDaRimuovere.getId());	
 		Societa societaSupposedToBeRemoved= societaService.caricaSingolaSocieta(societaDaRimuovere.getId());
 		if(societaSupposedToBeRemoved != null)
 			throw new RuntimeException("testRimozioneSocieta failed");
+		}catch (SocietaConDipendentiAssociatiException e) {
+			e.printStackTrace();
+		}
 		
 		System.out.println("testRimozioneSocieta....OK");
 	}
@@ -125,6 +128,24 @@ public class BatteriaDiTestService {
 			throw new RuntimeException("testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi failed");
 		
 		System.out.println("testTutteLeSocietaConAlmenoUnDipendenteConRalMaggiorDi...OK");
+	}
+	
+	public void testDipendentePiuAnzianoDelleSocietaFondatePrimaDel() throws Exception {
+		
+		Societa societa1=new Societa("nuovaSocieta","via roma",new SimpleDateFormat("dd/MM/yyyy").parse("24/07/1980"));
+		societaService.inserisciNuovo(societa1);
+		Dipendente nuovoDipendente=new Dipendente("luca", "rossi", new SimpleDateFormat("dd/MM/yyyy").parse("24/07/2000"),400000,societa1);
+		dipendenteService.inserisciNuovo(nuovoDipendente);
+		Dipendente nuovoDipendente2=new Dipendente("mario", "rossi", new SimpleDateFormat("dd/MM/yyyy").parse("24/07/2022"),400000,societa1);
+		dipendenteService.inserisciNuovo(nuovoDipendente2);
+		
+		Date dataConfronto=new SimpleDateFormat("dd/MM/yyyy").parse("01/01/1990");
+		Dipendente dipendentePiuAnziano=dipendenteService.dipendentePiuAnzianoDelleSocietaFondatePrimaDel(dataConfronto);
+		if(!dipendentePiuAnziano.getNome().equals("luca"))
+             throw new RuntimeException("testDipendentePiuAnzianoDelleSocietaFondatePrimaDel failed");
+		
+		System.out.println("testDipendentePiuAnzianoDelleSocietaFondatePrimaDel...OK");
+			
 	}
 	
 	
